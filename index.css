@@ -11,9 +11,9 @@ button {
 	top: 0px;
 	left: 0px;
 	background-image: url("bg.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 	height: 400px;
 	width: 600px;
 	filter: blur(10px);
