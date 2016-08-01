@@ -15,3 +15,5 @@ jquery-letterfx.min.css
 node_modules/
 jquery.canvasjs.min.js
 bg.jpg
+logo.ico
+dist/

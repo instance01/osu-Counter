@@ -106,6 +106,8 @@ ipcMain.on('loadstats', (event, arg) => {
 		if(contents.length > 0){
 			oldStats = JSON.parse(contents);
 			event.sender.send("loadstats_reply", contents);
+		} else {
+			oldStats = JSON.parse("[]")
 		}
 	} catch (e) {
 		console.log(e);
@@ -150,7 +152,9 @@ setInterval(function() {
 			if(!key1wasdown){
 				key1wasdown = true;
 				key1count++;
-				win.webContents.send("counter_update", "Key 1: " + key1count + "<br>Key 2: " + key2count)
+				if(win != null){
+					win.webContents.send("counter_update", "Key 1: " + key1count + "<br>Key 2: " + key2count)
+				}
 			}
 		} else {
 			key1wasdown = false;
@@ -160,7 +164,9 @@ setInterval(function() {
 			if(!key2wasdown){
 				key2wasdown = true;
 				key2count++;
-				win.webContents.send("counter_update", "Key 1: " + key1count + "<br>Key 2: " + key2count)
+				if(win != null){
+					win.webContents.send("counter_update", "Key 1: " + key1count + "<br>Key 2: " + key2count)
+				}
 			}
 		} else{
 			key2wasdown = false;
