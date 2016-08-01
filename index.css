@@ -1,0 +1,83 @@
+html, body {
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	-webkit-app-region: drag;
+	color: white;
+}
+button {
+	-webkit-app-region: no-drag;
+}
+#backgroundimg {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-image: url("bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+	height: 400px;
+	width: 600px;
+	filter: blur(10px);
+	-webkit-filter: blur(5px);
+}
+#buttons {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 600px;
+	height: 200px;
+	-webkit-app-region: drag;
+}
+#buttonscontent {
+	margin: 0px;
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) }
+}
+#chart {
+	position: absolute;
+	width: 600px;
+	height: 180px;
+	top: 200px;
+	left: 0px;
+}
+#footer {
+	position: absolute;
+	width: 600px;
+	height: 20px;
+	top: 380px;
+	left: 0px;
+	text-align: center;
+	-webkit-app-region: no-drag;
+	background-color: #262626;
+}
+#closebtn {
+	z-index: 10;
+	border: 0px solid;
+	display: inline-block;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	width: 50px;
+	height: 25px;
+	background-color: #FF695E;
+	left: 550px;
+	-webkit-app-region: no-drag;
+}
+#bgpanel {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 600px;
+	height: 380px;
+	background-color: rgba(0, 0, 0, 0.89);
+}
+#titlebarbg {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 600px;
+	height: 26px;
+	background-color: rgba(0, 0, 0, 0.30);
+}

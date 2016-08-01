@@ -1,0 +1,8 @@
+{
+  "name": "osu-counter",
+  "version": "0.1.1",
+  "main": "main.js",
+  "devDependencies": {
+    "electron-rebuild": "^1.1.5"
+  }
+}

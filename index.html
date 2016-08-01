@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>osu! keypress counter</title>
+<link rel="stylesheet" type="text/css" href="jquery-letterfx.min.css">
+<link rel="stylesheet" type="text/css" href="s/s.min.css">
+<link rel="stylesheet" type="text/css" href="index.css">
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="jquery-letterfx.min.js"></script>
+<script type="text/javascript" src="jquery.canvasjs.min.js"></script>
+<script>if (window.module) module = window.module;</script>
+<script>
+
+function convertKeys(arg){
+	var f = (arg > 94 && arg < 106) ? arg - 48 : arg;
+	f = (arg > 105 && arg < 112) ? arg - 64 : f;
+	f = (arg == 188) ? 44 : (arg == 190) ? 46 : f;
+	return f;
+}
+
+$(document).ready(function(){
+	const {ipcRenderer} = require('electron')
+	$('.header_').letterfx({"fx":"swirl", "fx_duration":"100ms"});
+		
+	ipcRenderer.on('buttonclick_reply_key1', (event, arg) => {
+		$("#key1").removeClass("loading");
+		$("#key1").text(String.fromCharCode(convertKeys(arg)));
+	})
+	
+	ipcRenderer.on('buttonclick_reply_key2', (event, arg) => {
+		$("#key2").removeClass("loading");
+		$("#key2").text(String.fromCharCode(convertKeys(arg)));
+	});
+	
+	ipcRenderer.on('counter_update', (event, arg) => {
+		$(".header_").html(arg);
+	});
+	
+	ipcRenderer.on('loadstats_reply', (event, arg) => {
+		var parsedJson = JSON.parse(arg);
+		var data = [];
+		for(i = 0; i < parsedJson.length; i++){
+			var currentElement = parsedJson[i];
+			data.push({x: new Date(currentElement.date.substring(6), parseInt(currentElement.date.substring(0, 2)) - 1, currentElement.date.substring(3, 5)), y: currentElement.keycount});
+		}
+
+		var chart = new CanvasJS.Chart("chart",
+		{
+			width: 600,
+			backgroundColor: "transparent",
+			data: [
+			{
+				type: "line",
+				dataPoints: data
+			}]
+		});
+
+		chart.render();
+	});
+	
+	ipcRenderer.send("loadbuttons", "");
+	ipcRenderer.send("loadstats", "");
+	
+	$("#key1").click(function(){
+		$(this).addClass("loading");
+		ipcRenderer.send('buttonclick', 'key1');
+	});
+	$("#key2").click(function(){
+		$(this).addClass("loading");
+		ipcRenderer.send('buttonclick', 'key2');
+	});
+	
+	$("#closebtn").click(function(){
+		ipcRenderer.send("exitbtn", "");
+	});
+	
+	$("#link").click(function(){
+		const {shell} = require('electron')
+		shell.openExternal('https://github.com/instance01')
+	});
+	
+	// why
+	$("#chart").css({"height": "180px", "top": "200px", "position": "absolute"});
+});
+</script>
+</head>
+<body>
+<div id="backgroundimg"></div>
+<div id="bgpanel"></div>
+<div id="titlebarbg"></div>
+<div id="buttons">
+	<button id="closebtn"><i class="remove icon"></i></button>
+	<div id="buttonscontent">
+		<center>
+			<p class="header_">Click to set up your two osu! keys.</p>
+			<button id="key1" class="ui green left attached button">Key 1</button>
+			<button id="key2" class="ui green right attached button">Key 2</button>
+		</center>
+	</div>
+</div>
+<div id="chart">
+</div>
+<div id="footer">
+<a id="link" href="#"><i class="github icon"></i>instancelabs</a>
+</div>
+</body>
+</html>
